@@ -7,30 +7,42 @@
  */
 
 import React, { Component } from "react";
-import { Text, TouchableOpacity } from "react-native";
-import { Card, CardItem, Body, Left, Thumbnail } from "native-base";
+import { Text, TouchableOpacity, View, Image } from "react-native";
+import { Card, CardItem, Body, Header, Thumbnail } from "native-base";
 class ProductData extends Component {
     render() {
         return (
-            <Card>
-                <TouchableOpacity onPress={this.props.getDetails}>
-                    <CardItem>
-                        <Left>
-                            <Thumbnail
+            <View style={{ flex: 1, flexDirectopn: "column" }}>
+                <Card>
+                    <TouchableOpacity onPress={this.props.getDetails}>
+                        <CardItem cardBody>
+                            <Image
                                 source={this.props.itemImage}
-                                style={{ overflow: "visible" }}
+                                style={{ height: 150, width: null, flex: 1 }}
                             />
+                        </CardItem>
+                        <CardItem>
                             <Body>
-                                <Text>
-                                    {this.props.itemName} -{" "}
+                                <Text style={{ fontWeight: "bold" }}>
+                                    {this.props.itemName}
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontWeight: "bold",
+                                        color: "#44dd44",
+                                        fontSize: 18
+                                    }}
+                                >
                                     {this.props.itemPrice}
                                 </Text>
-                                <Text note>{this.props.itemSeller}</Text>
+                                <Text style={{ fontSize: 13 }}>
+                                    {this.props.itemSeller}
+                                </Text>
                             </Body>
-                        </Left>
-                    </CardItem>
-                </TouchableOpacity>
-            </Card>
+                        </CardItem>
+                    </TouchableOpacity>
+                </Card>
+            </View>
         );
     }
 }

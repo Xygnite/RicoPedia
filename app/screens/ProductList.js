@@ -143,6 +143,7 @@ class ProductList extends Component {
                                 }}
                             />
                         )}
+                        numColumns={2}
                     />
                 </Content>
             </Container>
