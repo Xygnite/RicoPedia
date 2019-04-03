@@ -17,6 +17,7 @@ import {
     FooterTab
 } from "native-base";
 import { Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+
 class ProductDetails extends Component {
     constructor(props) {
         super(props);
@@ -24,6 +25,7 @@ class ProductDetails extends Component {
 
     render() {
         const { navigation } = this.props;
+        const key = navigation.getParam("itemKey", "");
         const img = navigation.getParam("itemImage", "");
         const name = navigation.getParam("itemName", "");
         const price = navigation.getParam("itemPrice", "");
@@ -51,7 +53,7 @@ class ProductDetails extends Component {
                             <Text
                                 style={{
                                     fontWeight: "bold",
-                                    color: "#44dd44",
+                                    color: "#44bb44",
                                     fontSize: 25
                                 }}
                             >
@@ -69,7 +71,19 @@ class ProductDetails extends Component {
                     </Card>
                 </Content>
                 <Footer style={styles.footerStyle}>
-                    <Button style={styles.footerButton}>
+                    <Button
+                        style={styles.footerButton}
+                        onPress={() => {
+                            this.props.navigation.navigate("Cart", {
+                                itemKey: key,
+                                itemImage: img,
+                                itemName: name,
+                                itemPrice: price,
+                                itemSeller: seller,
+                                itemDetails: details
+                            });
+                        }}
+                    >
                         <Text>Add to Cart</Text>
                     </Button>
                     <Button
@@ -95,7 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     footerButtonMain: {
-        backgroundColor: "#44dd44",
+        backgroundColor: "#44bb44",
         marginLeft: 4,
         marginRight: 4,
         flex: 0.5,

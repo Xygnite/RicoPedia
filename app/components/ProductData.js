@@ -29,7 +29,7 @@ class ProductData extends Component {
                                 <Text
                                     style={{
                                         fontWeight: "bold",
-                                        color: "#44dd44",
+                                        color: "#44bb44",
                                         fontSize: 18
                                     }}
                                 >

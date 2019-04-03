@@ -67,8 +67,9 @@ const TabNavigator = createBottomTabNavigator(
                 );
             }
         }),
+        resetOnBlur: true,
         tabBarOptions: {
-            activeTintColor: "#44dd44",
+            activeTintColor: "#44bb44",
             inactiveTintColor: "#aaaaaa"
         }
     }

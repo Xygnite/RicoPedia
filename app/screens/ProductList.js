@@ -29,7 +29,7 @@ class ProductList extends Component {
                 {
                     key: "a",
                     img: require("../assets/a.jpg"),
-                    val: "Sepatu Ah Did Us",
+                    name: "Sepatu Ah Did Us",
                     seller: "Pak Kartono",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -38,7 +38,7 @@ class ProductList extends Component {
                 {
                     key: "b",
                     img: require("../assets/b.jpg"),
-                    val: "Edgar Backpack",
+                    name: "Edgar Backpack",
                     seller: "Xiao",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -47,7 +47,7 @@ class ProductList extends Component {
                 {
                     key: "c",
                     img: require("../assets/c.jpg"),
-                    val: "RilMi KW",
+                    name: "RilMi KW",
                     seller: "Siaomay",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -56,7 +56,7 @@ class ProductList extends Component {
                 {
                     key: "d",
                     img: require("../assets/d.jpg"),
-                    val: "Laptop GOR",
+                    name: "Laptop GOR",
                     seller: "Usas",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -65,7 +65,7 @@ class ProductList extends Component {
                 {
                     key: "e",
                     img: require("../assets/e.png"),
-                    val: "Helm TKY",
+                    name: "Helm TKY",
                     seller: "TKY Helmets",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -74,7 +74,7 @@ class ProductList extends Component {
                 {
                     key: "f",
                     img: require("../assets/f.jpg"),
-                    val: "Smart TV Sumsang",
+                    name: "Smart TV Sumsang",
                     seller: "Sumsang Electronics",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -83,7 +83,7 @@ class ProductList extends Component {
                 {
                     key: "g",
                     img: require("../assets/g.jpg"),
-                    val: "Gayung Original",
+                    name: "Gayung Original",
                     seller: "Perabot Online",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -92,7 +92,7 @@ class ProductList extends Component {
                 {
                     key: "h",
                     img: require("../assets/h.jpg"),
-                    val: "Teflon Baja",
+                    name: "Teflon Baja",
                     seller: "Alat Masak Online",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -101,7 +101,7 @@ class ProductList extends Component {
                 {
                     key: "i",
                     img: require("../assets/i.jpg"),
-                    val: "PowerBank Robotto",
+                    name: "PowerBank Robotto",
                     seller: "Robotto Batteries",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -110,7 +110,7 @@ class ProductList extends Component {
                 {
                     key: "j",
                     img: require("../assets/j.jpg"),
-                    val: "Kacamata VR Ready",
+                    name: "Kacamata VR Ready",
                     seller: "NVideo Graphics",
                     details:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -127,15 +127,17 @@ class ProductList extends Component {
                         data={this.state.itemDetail}
                         renderItem={({ item }) => (
                             <ProductData
+                                itemKey={item.key}
                                 itemImage={item.img}
-                                itemName={item.val}
+                                itemName={item.name}
                                 itemSeller={item.seller}
                                 itemPrice={item.price}
                                 itemDetails={item.details}
                                 getDetails={() => {
                                     this.props.navigation.navigate("PD", {
+                                        itemKey: item.key,
                                         itemImage: item.img,
-                                        itemName: item.val,
+                                        itemName: item.name,
                                         itemPrice: item.price,
                                         itemSeller: item.seller,
                                         itemDetails: item.details
