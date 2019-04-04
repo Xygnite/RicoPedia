@@ -28,13 +28,120 @@ class ProductList extends Component {
         super(props);
 
         this.state = {
-            itemDetail: []
+            itemDetail: [],
+            qtyholder: 0
         };
     }
     componentWillUnmount() {
         // Remove the event listener
         this.focusListener.remove();
     }
+    componentDidMount() {
+        this.addData();
+        console.log("didmount");
+    }
+    componentDidUpdate(prevProps, prevState) {
+        console.log("didupdate");
+        const { navigation } = this.props;
+        const key = navigation.getParam("itemKey", "");
+        const qty = navigation.getParam("itemQty", "");
+        const update = navigation.getParam("update", false);
+        const modID = this.state.itemDetail.filter(x => {
+            return x.key == key;
+        });
+        const prevmodID = prevState.itemDetail.filter(x => {
+            return x.key == key;
+        });
+        const index = this.state.itemDetail.indexOf(x => x.key == key) + 1;
+
+        if (modID.length < 1) {
+            this.addData();
+            // } else {
+            //     console.log(index);
+            //     this.setState({
+            //         itemDetail: [
+            //             ...this.state.itemDetail.slice(0, index),
+            //             Object.assign({}, this.state.itemDetail[index], {
+            //                 qty: this.state.itemDetail[index].qty + qty
+            //             }),
+            //             ...this.state.itemDetail.slice(index + 1)
+            //         ]
+            //     });
+        }
+    }
+    addNum = (item, index) => () => {
+        this.setState({
+            itemDetail: [
+                ...this.state.itemDetail.slice(0, index),
+                Object.assign({}, this.state.itemDetail[index], {
+                    qty: item.qty + 1
+                }),
+                ...this.state.itemDetail.slice(index + 1)
+            ]
+        });
+    };
+    subNum = (item, index) => () => {
+        if (this.state.itemDetail[index].qty < 2) {
+            this.setState({
+                itemDetail: [
+                    ...this.state.itemDetail.slice(0, index),
+                    Object.assign({}, this.state.itemDetail[index], {
+                        qty: 1
+                    }),
+                    ...this.state.itemDetail.slice(index + 1)
+                ]
+            });
+        } else {
+            this.setState({
+                itemDetail: [
+                    ...this.state.itemDetail.slice(0, index),
+                    Object.assign({}, this.state.itemDetail[index], {
+                        qty: item.qty - 1
+                    }),
+                    ...this.state.itemDetail.slice(index + 1)
+                ]
+            });
+        }
+    };
+    textNum = (item, index) => text => {
+        if (this.state.itemDetail[index].qty == 0) {
+            console.log("if");
+            this.setState({
+                itemDetail: [
+                    ...this.state.itemDetail.slice(0, index),
+                    Object.assign({}, this.state.itemDetail[index], {
+                        qty: parseInt(text)
+                    }),
+                    ...this.state.itemDetail.slice(index + 1)
+                ]
+            });
+        } else {
+            console.log("else");
+            this.setState({
+                itemDetail: [
+                    ...this.state.itemDetail.slice(0, index),
+                    Object.assign({}, this.state.itemDetail[index], {
+                        qty: text.replace(/[^0-9]/g, "")
+                    }),
+                    ...this.state.itemDetail.slice(index + 1)
+                ]
+            });
+        }
+    };
+    editNum = (item, index) => () => {
+        if (this.state.itemDetail[index].qty == 0 || null) {
+            console.log("if");
+            this.setState({
+                itemDetail: [
+                    ...this.state.itemDetail.slice(0, index),
+                    Object.assign({}, this.state.itemDetail[index], {
+                        qty: 1
+                    }),
+                    ...this.state.itemDetail.slice(index + 1)
+                ]
+            });
+        }
+    };
     addData() {
         var d = new Date();
         const { navigation } = this.props;
@@ -44,6 +151,9 @@ class ProductList extends Component {
         const seller = navigation.getParam("itemSeller", "");
         const details = navigation.getParam("itemDetails", "");
         const key = navigation.getParam("itemKey", "");
+        const qty = navigation.getParam("itemQty", "");
+        console.log("QTY");
+        console.log(qty);
         if (key !== "") {
             this.setState({
                 itemDetail: [
@@ -54,7 +164,8 @@ class ProductList extends Component {
                         name: name,
                         price: price,
                         seller: seller,
-                        details: details
+                        details: details,
+                        qty: qty
                     }
                 ]
             });
@@ -62,9 +173,6 @@ class ProductList extends Component {
     }
     render() {
         const { navigation } = this.props;
-        this.focusListener = navigation.addListener("didFocus", () => {
-            this.addData();
-        });
         if (this.state.itemDetail.length < 1) {
             return (
                 <Container
@@ -82,14 +190,23 @@ class ProductList extends Component {
                 <Container>
                     <FlatList
                         data={this.state.itemDetail}
-                        renderItem={({ item }) => (
+                        renderItem={({ item, index }) => (
                             <CartData
+                                ref={child => {
+                                    this.child = child;
+                                }}
+                                {...this.props}
                                 itemKey={item.key}
                                 itemImage={item.img}
                                 itemName={item.name}
                                 itemSeller={item.seller}
                                 itemPrice={item.price}
                                 itemDetails={item.details}
+                                itemQty={item.qty.toString()}
+                                addQty={this.addNum(item, index)}
+                                subQty={this.subNum(item, index)}
+                                textChange={this.textNum(item, index)}
+                                editChange={this.editNum(item, index)}
                             />
                         )}
                     />

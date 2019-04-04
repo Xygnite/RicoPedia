@@ -25,50 +25,24 @@ class CartData extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            myNumber: 1
+            myNumber: 1,
+            added: true
         };
     }
-
-    onTextChanged = text => {
-        if (this.state.myNumber < 1) {
+    componentDidUpdate() {}
+    textChange(text) {
+        if (text !== "") {
+            console.log(text);
+            console.log(text.text.replace(/[^0-9]/g, ""));
             this.setState({
-                myNumber: 1
+                myNumber: parseInt(text.text.replace(/[^0-9]/g, ""))
             });
         } else {
-            this.setState({
-                myNumber: text.replace(/[^0-9]/g, "")
-            });
-        }
-    };
-    onTextEnd() {
-        if (this.state.myNumber < 1) {
             this.setState({
                 myNumber: 1
             });
         }
     }
-    addNum = () => {
-        if (this.state.myNumber < 1) {
-            this.setState({
-                myNumber: 1
-            });
-        } else {
-            this.setState({
-                myNumber: this.state.myNumber + 1
-            });
-        }
-    };
-    subNum = () => {
-        if (this.state.myNumber < 2) {
-            this.setState({
-                myNumber: 1
-            });
-        } else {
-            this.setState({
-                myNumber: this.state.myNumber - 1
-            });
-        }
-    };
     render() {
         return (
             <View key={this.props.itemKey}>
@@ -97,7 +71,7 @@ class CartData extends Component {
                         <Left style={{ flex: 4 }}>
                             <Button
                                 style={styles.buttonWhite}
-                                onPress={this.subNum.bind(this)}
+                                onPress={this.props.subQty}
                             >
                                 <MaterialIcons
                                     name={"keyboard-arrow-left"}
@@ -111,13 +85,13 @@ class CartData extends Component {
 
                             <Input
                                 keyboardType={"number-pad"}
-                                onChangeText={text => this.onTextChanged(text)}
-                                onEndEditing={() => this.onTextEnd()}
-                                value={this.state.myNumber.toString()}
+                                onChangeText={this.props.textChange}
+                                onEndEditing={this.props.editChange}
+                                value={this.props.itemQty}
                             />
                             <Button
                                 style={styles.buttonWhite}
-                                onPress={this.addNum.bind(this)}
+                                onPress={this.props.addQty}
                             >
                                 <MaterialIcons
                                     name={"keyboard-arrow-right"}

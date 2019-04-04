@@ -14,15 +14,61 @@ import {
     CardItem,
     Button,
     Footer,
-    FooterTab
+    Body,
+    Left,
+    Right,
+    Input
 } from "native-base";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 
 class ProductDetails extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            myNumber: 1
+        };
     }
-
+    onTextChanged = text => {
+        if (this.state.myNumber < 1) {
+            this.setState({
+                myNumber: parseInt(text)
+            });
+        } else {
+            this.setState({
+                myNumber: text.replace(/[^0-9]/g, "")
+            });
+        }
+    };
+    onTextEnd() {
+        if (this.state.myNumber < 1) {
+            this.setState({
+                myNumber: 1
+            });
+        }
+    }
+    addNum = () => {
+        if (this.state.myNumber < 1) {
+            this.setState({
+                myNumber: 1
+            });
+        } else {
+            this.setState({
+                myNumber: this.state.myNumber + 1
+            });
+        }
+    };
+    subNum = () => {
+        if (this.state.myNumber < 2) {
+            this.setState({
+                myNumber: 1
+            });
+        } else {
+            this.setState({
+                myNumber: this.state.myNumber - 1
+            });
+        }
+    };
     render() {
         const { navigation } = this.props;
         const key = navigation.getParam("itemKey", "");
@@ -31,6 +77,8 @@ class ProductDetails extends Component {
         const price = navigation.getParam("itemPrice", "");
         const seller = navigation.getParam("itemSeller", "");
         const details = navigation.getParam("itemDetails", "");
+        const qty = this.state.myNumber;
+        console.log(qty);
         return (
             <Container>
                 <Content>
@@ -42,23 +90,62 @@ class ProductDetails extends Component {
                             />
                         </CardItem>
                         <CardItem header>
-                            <Text
-                                style={{
-                                    fontWeight: "bold",
-                                    fontSize: 18
-                                }}
-                            >
-                                {name} -{" "}
-                            </Text>
-                            <Text
-                                style={{
-                                    fontWeight: "bold",
-                                    color: "#44bb44",
-                                    fontSize: 25
-                                }}
-                            >
-                                {price}
-                            </Text>
+                            <Left style={{ flex: 6 }}>
+                                <Text
+                                    style={{
+                                        fontWeight: "bold",
+                                        fontSize: 15
+                                    }}
+                                >
+                                    {name} -{" "}
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontWeight: "bold",
+                                        color: "#44bb44",
+                                        fontSize: 18
+                                    }}
+                                >
+                                    {price}
+                                </Text>
+                            </Left>
+                        </CardItem>
+                        <CardItem header>
+                            <Left style={{ flex: 6 }} />
+                            <Left style={{ flex: 4 }}>
+                                <Button
+                                    style={styles.buttonWhite}
+                                    onPress={this.subNum.bind(this)}
+                                >
+                                    <MaterialIcons
+                                        name={"keyboard-arrow-left"}
+                                        size={25}
+                                        color={"#ffffff"}
+                                    />
+                                </Button>
+                                <Body>
+                                    <Text>Qty :</Text>
+                                </Body>
+
+                                <Input
+                                    keyboardType={"number-pad"}
+                                    onChangeText={text =>
+                                        this.onTextChanged(text)
+                                    }
+                                    onEndEditing={() => this.onTextEnd()}
+                                    value={this.state.myNumber.toString()}
+                                />
+                                <Button
+                                    style={styles.buttonWhite}
+                                    onPress={this.addNum.bind(this)}
+                                >
+                                    <MaterialIcons
+                                        name={"keyboard-arrow-right"}
+                                        size={25}
+                                        color={"#ffffff"}
+                                    />
+                                </Button>
+                            </Left>
                         </CardItem>
                     </Card>
                     <Card>
@@ -80,7 +167,8 @@ class ProductDetails extends Component {
                                 itemName: name,
                                 itemPrice: price,
                                 itemSeller: seller,
-                                itemDetails: details
+                                itemDetails: details,
+                                itemQty: this.state.myNumber
                             });
                         }}
                     >
@@ -122,6 +210,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         paddingBottom: 5,
         paddingTop: 5
+    },
+    buttonWhite: {
+        backgroundColor: "#44bb44"
     }
 });
 
