@@ -35,6 +35,9 @@ import {
     BackHandler,
     ScrollView
 } from "react-native";
+
+import Cart from "./Cart";
+
 class Checkout extends Component {
     constructor(props) {
         super(props);
@@ -276,19 +279,9 @@ class Checkout extends Component {
                                         textAlign: "center"
                                     }}
                                     onPress={() =>
-                                        StackActions.reset(
-                                            {
-                                                index: 0,
-                                                actions: [
-                                                    NavigationActions.navigate(
-                                                        "Cart"
-                                                    )
-                                                ]
-                                            },
-                                            this.props.navigation.navigate(
-                                                "Cart"
-                                            )
-                                        )
+                                        this.props.navigation.navigate("Cart", {
+                                            itemKey: "delete"
+                                        })
                                     }
                                 >
                                     <Text

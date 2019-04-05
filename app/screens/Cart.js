@@ -171,20 +171,9 @@ class ProductList extends Component {
             const modID = this.state.itemDetail.filter(x => {
                 return x.key == key;
             });
-            if (modID.length < 1 && key !== "") {
+            if (key == "delete") {
                 this.setState({
-                    itemDetail: [
-                        ...this.state.itemDetail,
-                        {
-                            key: key,
-                            img: img,
-                            name: name,
-                            price: price,
-                            seller: seller,
-                            details: details,
-                            qty: qty
-                        }
-                    ]
+                    itemDetail: []
                 });
             } else if (modID.length == 1) {
                 console.log(key);
@@ -200,6 +189,21 @@ class ProductList extends Component {
                             qty: this.state.itemDetail[index].qty + qty
                         }),
                         ...this.state.itemDetail.slice(index + 1)
+                    ]
+                });
+            } else if (modID.length < 1 && key !== "") {
+                this.setState({
+                    itemDetail: [
+                        ...this.state.itemDetail,
+                        {
+                            key: key,
+                            img: img,
+                            name: name,
+                            price: price,
+                            seller: seller,
+                            details: details,
+                            qty: qty
+                        }
                     ]
                 });
             }
