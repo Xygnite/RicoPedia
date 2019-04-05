@@ -21,7 +21,7 @@ import {
 } from "native-base";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-
+import Cart from "./Cart";
 class ProductDetails extends Component {
     constructor(props) {
         super(props);
@@ -29,6 +29,20 @@ class ProductDetails extends Component {
             myNumber: 1
         };
     }
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+        return {
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <MaterialIcons
+                        style={{ paddingLeft: 8 }}
+                        name={"chevron-left"}
+                        size={32}
+                    />
+                </TouchableOpacity>
+            )
+        };
+    };
     onTextChanged = text => {
         if (this.state.myNumber < 1) {
             this.setState({
@@ -106,7 +120,13 @@ class ProductDetails extends Component {
                                         fontSize: 18
                                     }}
                                 >
-                                    {price}
+                                    Rp.{" "}
+                                    {price
+                                        .toString()
+                                        .replace(
+                                            /(\d)(?=(\d\d\d)+(?!\d))/g,
+                                            "$1,"
+                                        )}
                                 </Text>
                             </Left>
                         </CardItem>
@@ -177,7 +197,9 @@ class ProductDetails extends Component {
                     <Button
                         style={styles.footerButtonMain}
                         onPress={() => {
-                            this.props.navigation.navigate("Cart");
+                            this.props.navigation.navigate("Checkout",{
+                                itemPrice: price*this.state.myNumber
+                            });
                         }}
                     >
                         <Text style={styles.buttonText}>Buy Now</Text>

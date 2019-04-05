@@ -61,16 +61,22 @@ class CartData extends Component {
                                         fontSize: 18
                                     }}
                                 >
-                                    {this.props.itemPrice}
+                                    Rp.{" "}
+                                    {this.props.itemPrice
+                                        .toString()
+                                        .replace(
+                                            /(\d)(?=(\d\d\d)+(?!\d))/g,
+                                            "$1,"
+                                        )}
                                 </Text>
                                 <Text style={{ fontSize: 13 }}>
                                     {this.props.itemSeller}
                                 </Text>
                             </Body>
                         </Left>
-                        <Left style={{ flex: 4 }}>
+                        <Left style={{ flex: 3.5 }}>
                             <Button
-                                style={styles.buttonWhite}
+                                style={styles.buttonGreen}
                                 onPress={this.props.subQty}
                             >
                                 <MaterialIcons
@@ -79,18 +85,19 @@ class CartData extends Component {
                                     color={"#ffffff"}
                                 />
                             </Button>
-                            <Body>
-                                <Text>Qty :</Text>
-                            </Body>
 
                             <Input
+                                style={{
+                                    justifyContent: "center",
+                                    textAlign: "center"
+                                }}
                                 keyboardType={"number-pad"}
                                 onChangeText={this.props.textChange}
                                 onEndEditing={this.props.editChange}
                                 value={this.props.itemQty}
                             />
                             <Button
-                                style={styles.buttonWhite}
+                                style={styles.buttonGreen}
                                 onPress={this.props.addQty}
                             >
                                 <MaterialIcons
@@ -101,6 +108,22 @@ class CartData extends Component {
                             </Button>
                         </Left>
                     </CardItem>
+                    <CardItem>
+                        <View style={{ flex: 6 }} />
+                        <View style={{ flex: 3.5 }}>
+                            <Button
+                                full
+                                style={styles.buttonRed}
+                                onPress={this.props.delData}
+                            >
+                                <MaterialIcons
+                                    name={"delete"}
+                                    size={25}
+                                    color={"#ffffff"}
+                                />
+                            </Button>
+                        </View>
+                    </CardItem>
                 </Card>
             </View>
         );
@@ -108,8 +131,12 @@ class CartData extends Component {
 }
 
 const styles = StyleSheet.create({
-    buttonWhite: {
+    buttonGreen: {
         backgroundColor: "#44bb44"
+    },
+    buttonRed: {
+        backgroundColor: "#bb4444",
+        flex: 1
     }
 });
 export default CartData;

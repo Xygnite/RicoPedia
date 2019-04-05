@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, ScrollView } from "react-native";
 import {
     createStackNavigator,
     createAppContainer,
@@ -17,6 +17,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import ProductList from "./app/screens/ProductList";
 import ProductDetails from "./app/screens/ProductDetails";
 import Cart from "./app/screens/Cart";
+import Checkout from "./app/screens/Checkout";
 
 class App extends Component {
     render() {
@@ -25,6 +26,7 @@ class App extends Component {
                 <ProductList />
                 <ProductDetails />
                 <Cart />
+                <Checkout />
             </View>
         );
     }
@@ -67,7 +69,7 @@ const TabNavigator = createBottomTabNavigator(
                 );
             }
         }),
-        // resetOnBlur: true,
+        resetOnBlur: true,
         tabBarOptions: {
             activeTintColor: "#44bb44",
             inactiveTintColor: "#aaaaaa"
@@ -94,6 +96,13 @@ const AppNavigator = createStackNavigator(
             screen: ProductDetails,
             navigationOptions: {
                 title: "Product Details",
+                tabBarVisible: "false"
+            }
+        },
+        Checkout: {
+            screen: Checkout,
+            navigationOptions: {
+                title: "Checkout",
                 tabBarVisible: "false"
             }
         }

@@ -5554,6 +5554,11 @@ react-native@0.59.2:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
+react-navigation-backhandler@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-navigation-backhandler/-/react-navigation-backhandler-1.3.0.tgz#22b7b1ffd9397c9a4309ad892e82af22ac356333"
+  integrity sha512-UWPQsuVgUIzMjUuEuEvJyfP3oJTUjYaz2/CHZx2byur0ai5/CBSkJ204H9UOJqzABu54hmO5hMoCmU46vL9l5Q==
+
 react-navigation-drawer@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-1.3.0.tgz#0bb8022003b36e919e3ae55394a81384f36a14f0"

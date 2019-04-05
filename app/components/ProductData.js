@@ -33,7 +33,13 @@ class ProductData extends Component {
                                         fontSize: 18
                                     }}
                                 >
-                                    {this.props.itemPrice}
+                                    Rp.{" "}
+                                    {this.props.itemPrice
+                                        .toString()
+                                        .replace(
+                                            /(\d)(?=(\d\d\d)+(?!\d))/g,
+                                            "$1,"
+                                        )}
                                 </Text>
                                 <Text style={{ fontSize: 13 }}>
                                     {this.props.itemSeller}

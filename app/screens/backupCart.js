@@ -31,68 +31,97 @@ class ProductList extends Component {
 
         this.state = {
             itemDetail: [],
-            deletedKey: "",
-            total: 0
+            shouldUpdate: true,
+            isDel: false
         };
     }
-    componentWillUnmount() {}
     componentDidMount() {
         this.addData();
     }
-    componentDidUpdate() {
-        const { navigation } = this.props;
-        if (this.state.itemDetail.length > 0) {
-            const total = this.state.itemDetail
-                .map(x => x.price * x.qty)
-                .reduce((a, b) => a + b)
-                .toString();
-            if (this.state.total !== total) {
-                this.setState({
-                    total: total
-                });
-            }
+    shouldComponentUpdate(nextProp, nextState) {
+        if (this.state.shouldUpdate == false) {
+            return false;
+        } else {
+            return true;
         }
     }
-    // componentDidUpdate(prevProps, prevState) {
-    //     console.log("didupdate");
-    //     const { navigation } = this.props;
-    //     const key = navigation.getParam("itemKey", "");
-    //     const qty = navigation.getParam("itemQty", "");
-    //     const update = navigation.getParam("update", false);
-    //     const modID = this.state.itemDetail.filter(x => {
-    //         return x.key == key;
-    //     });
-    //     const prevmodID = prevState.itemDetail.filter(x => {
-    //         return x.key == key;
-    //     });
-    //     const index = this.state.itemDetail.indexOf(x => x.key == key) + 1;
-
-    //     if (modID.length < 1) {
-    //         this.addData();
-    // } else {
-    //     console.log(index);
-    //     this.setState({
-    //         itemDetail: [
-    //             ...this.state.itemDetail.slice(0, index),
-    //             Object.assign({}, this.state.itemDetail[index], {
-    //                 qty: this.state.itemDetail[index].qty + qty
-    //             }),
-    //             ...this.state.itemDetail.slice(index + 1)
-    //         ]
-    //     });
-    //     }
-
-    // }
-    addNum = (item, index) => () => {
-        this.setState({
-            itemDetail: [
-                ...this.state.itemDetail.slice(0, index),
-                Object.assign({}, this.state.itemDetail[index], {
-                    qty: item.qty + 1
-                }),
-                ...this.state.itemDetail.slice(index + 1)
-            ]
+    componentDidUpdate(prevProps, prevState) {
+        const { navigation } = this.props;
+        const key = navigation.getParam("itemKey", "");
+        const qty = navigation.getParam("itemQty", "");
+        const update = navigation.getParam("update", false);
+        const modID = this.state.itemDetail.filter(x => {
+            return x.key == key;
         });
+
+        const index = this.state.itemDetail.map(x => x.key).indexOf(key);
+        console.log();
+        this.setState({
+            shouldUpdate: true
+        });
+        console.log("didupdate");
+        if (modID.length < 1) {
+            this.addData();
+        } else if (this.state.shouldUpdate == true) {
+            if (this.state.isDel == true) {
+                this.setState({
+                    itemDetail: []
+                });
+            } else {
+                this.setState({
+                    itemDetail: [
+                        ...this.state.itemDetail.slice(0, index),
+                        Object.assign({}, this.state.itemDetail[index], {
+                            qty: this.state.itemDetail[index].qty + qty
+                        }),
+                        ...this.state.itemDetail.slice(index + 1)
+                    ]
+                });
+            }
+
+            this.setState({
+                shouldUpdate: false
+            });
+        }
+    }
+    delData = (item, index) => () => {
+        if (this.state.itemDetail.length == 0) {
+            this.setState({
+                itemDetail: []
+            });
+        } else {
+            const modState = this.state.itemDetail.filter(x => {
+                return x.key !== item.key;
+            });
+            this.setState(
+                {
+                    itemDetail: [...modState],
+                    shouldUpdate: true,
+                    isDel: true
+                },
+                this.setState({
+                    shouldUpdate: false,
+
+                    isDel: false
+                })
+            );
+        }
+    };
+    addNum = (item, index) => () => {
+        this.setState(
+            {
+                itemDetail: [
+                    ...this.state.itemDetail.slice(0, index),
+                    Object.assign({}, this.state.itemDetail[index], {
+                        qty: item.qty + 1
+                    }),
+                    ...this.state.itemDetail.slice(index + 1)
+                ]
+            },
+            this.setState({
+                shouldUpdate: false
+            })
+        );
     };
     subNum = (item, index) => () => {
         if (this.state.itemDetail[index].qty < 2) {
@@ -116,6 +145,9 @@ class ProductList extends Component {
                 ]
             });
         }
+        this.setState({
+            shouldUpdate: false
+        });
     };
     textNum = (item, index) => text => {
         if (this.state.itemDetail[index].qty == 0) {
@@ -125,6 +157,17 @@ class ProductList extends Component {
                     ...this.state.itemDetail.slice(0, index),
                     Object.assign({}, this.state.itemDetail[index], {
                         qty: parseInt(text)
+                    }),
+                    ...this.state.itemDetail.slice(index + 1)
+                ]
+            });
+        } else if (this.state.itemDetail[index].qty == "") {
+            console.log("if");
+            this.setState({
+                itemDetail: [
+                    ...this.state.itemDetail.slice(0, index),
+                    Object.assign({}, this.state.itemDetail[index], {
+                        qty: 1
                     }),
                     ...this.state.itemDetail.slice(index + 1)
                 ]
@@ -141,9 +184,15 @@ class ProductList extends Component {
                 ]
             });
         }
+        this.setState({
+            shouldUpdate: false
+        });
     };
     editNum = (item, index) => () => {
-        if (this.state.itemDetail[index].qty == 0 || null) {
+        if (
+            this.state.itemDetail[index].qty == 0 ||
+            this.state.itemDetail[index].qty == null
+        ) {
             console.log("if");
             this.setState({
                 itemDetail: [
@@ -155,75 +204,44 @@ class ProductList extends Component {
                 ]
             });
         }
+        this.setState({
+            shouldUpdate: false
+        });
     };
     addData() {
         var d = new Date();
         const { navigation } = this.props;
-        navigation.addListener("willFocus", () => {
-            const { navigation } = this.props;
-            const img = navigation.getParam("itemImage", "");
-            const name = navigation.getParam("itemName", "");
-            const price = navigation.getParam("itemPrice", "");
-            const seller = navigation.getParam("itemSeller", "");
-            const details = navigation.getParam("itemDetails", "");
-            const key = navigation.getParam("itemKey", "");
-            const qty = navigation.getParam("itemQty", "");
-            const modID = this.state.itemDetail.filter(x => {
-                return x.key == key;
-            });
-            if (modID.length < 1 && key !== "") {
-                this.setState({
-                    itemDetail: [
-                        ...this.state.itemDetail,
-                        {
-                            key: key,
-                            img: img,
-                            name: name,
-                            price: price,
-                            seller: seller,
-                            details: details,
-                            qty: qty
-                        }
-                    ]
-                });
-            } else if (modID.length == 1) {
-                console.log(key);
-                const index = this.state.itemDetail
-                    .map(x => x.key)
-                    .indexOf(key);
-
-                console.log("index", index);
-                this.setState({
-                    itemDetail: [
-                        ...this.state.itemDetail.slice(0, index),
-                        Object.assign({}, this.state.itemDetail[index], {
-                            qty: this.state.itemDetail[index].qty + qty
-                        }),
-                        ...this.state.itemDetail.slice(index + 1)
-                    ]
-                });
-            }
-        });
-    }
-    delData = (item, index) => () => {
-        if (this.state.itemDetail.length == 1) {
+        const img = navigation.getParam("itemImage", "");
+        const name = navigation.getParam("itemName", "");
+        const price = navigation.getParam("itemPrice", "");
+        const seller = navigation.getParam("itemSeller", "");
+        const details = navigation.getParam("itemDetails", "");
+        const key = navigation.getParam("itemKey", "");
+        const qty = navigation.getParam("itemQty", "");
+        console.log("QTY");
+        console.log(qty);
+        if (key !== "") {
             this.setState({
-                itemDetail: [],
-                deletedKey: item.key
-            });
-        } else {
-            const modState = this.state.itemDetail.filter(x => {
-                return x.key !== item.key;
+                itemDetail: [
+                    ...this.state.itemDetail,
+                    {
+                        key: key,
+                        img: img,
+                        name: name,
+                        price: price,
+                        seller: seller,
+                        details: details,
+                        qty: qty
+                    }
+                ]
             });
             this.setState({
-                itemDetail: [...modState],
-                deletedKey: item.key
+                shouldUpdate: false
             });
         }
-    };
+    }
     render() {
         const { navigation } = this.props;
-
         if (this.state.itemDetail.length < 1) {
             return (
                 <Container
@@ -241,6 +259,7 @@ class ProductList extends Component {
                 .map(x => x.price * x.qty)
                 .reduce((a, b) => a + b)
                 .toString();
+            console.log(total);
             return (
                 <Container>
                     <FlatList
@@ -298,24 +317,16 @@ class ProductList extends Component {
                                 </Text>
                             </Body>
                         </View>
-                        <Button
-                            style={styles.buttonMain}
-                            onPress={() => {
-                                this.props.navigation.navigate("Checkout", {
-                                    itemPrice: this.state.total
-                                });
-                            }}
-                        >
-                            <Text style={{ color: "#ffffff" }}>Checkout</Text>
+                        <Button style={styles.buttonMain}>
+                            <Text />
                         </Button>
                     </Footer>
                 </Container>
             );
-
-            <CartData />;
         }
     }
 }
+
 const styles = StyleSheet.create({
     footerStyle: {
         backgroundColor: "#ffffff",
