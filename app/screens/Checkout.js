@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 
 import React, { Component } from "react";
 import {
@@ -30,18 +23,18 @@ class Checkout extends Component {
         super(props);
         this.state = {
             price: 0,
-            selected: "key0",
-            selectedp: "key0"
+            selectedCour: "key0",
+            selectedPay: "key0"
         };
     }
     onValueChange(value) {
         this.setState({
-            selected: value
+            selectedCour: value
         });
     }
     onValueChangep(value) {
         this.setState({
-            selectedp: value
+            selectedPay: value
         });
     }
     static navigationOptions = ({ navigation }) => {
@@ -160,7 +153,7 @@ class Checkout extends Component {
                                                 mode="dropdown"
                                                 style={{ width: 120 }}
                                                 selectedValue={
-                                                    this.state.selected
+                                                    this.state.selectedCour
                                                 }
                                                 onValueChange={this.onValueChange.bind(
                                                     this
@@ -203,7 +196,7 @@ class Checkout extends Component {
                                                 mode="dropdown"
                                                 style={{ width: 120 }}
                                                 selectedValue={
-                                                    this.state.selectedp
+                                                    this.state.selectedPay
                                                 }
                                                 onValueChange={this.onValueChangep.bind(
                                                     this
