@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from "react";
-import { Text, TouchableOpacity, View, Image, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import {
     Card,
     CardItem,

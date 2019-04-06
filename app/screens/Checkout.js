@@ -13,28 +13,15 @@ import {
     Card,
     CardItem,
     Button,
-    Footer,
     Body,
-    Left,
-    Right,
-    Radio,
     Input,
     Form,
     Picker,
     Item,
     Textarea
 } from "native-base";
-import { NavigationActions, StackActions } from "react-navigation";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import {
-    Text,
-    TouchableOpacity,
-    Image,
-    StyleSheet,
-    View,
-    BackHandler,
-    ScrollView
-} from "react-native";
+import { Text, TouchableOpacity, BackHandler, ScrollView } from "react-native";
 
 import Cart from "./Cart";
 

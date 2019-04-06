@@ -7,18 +7,7 @@
  */
 
 import React, { Component } from "react";
-import {
-    Container,
-    Content,
-    Card,
-    CardItem,
-    Body,
-    Left,
-    Thumbnail,
-    Icon,
-    Footer,
-    Button
-} from "native-base";
+import { Container, Body, Footer, Button } from "native-base";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { FlatList, Text, StyleSheet, View } from "react-native";
 import { withNavigation } from "react-navigation";

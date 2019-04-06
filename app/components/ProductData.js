@@ -8,7 +8,7 @@
 
 import React, { Component } from "react";
 import { Text, TouchableOpacity, View, Image } from "react-native";
-import { Card, CardItem, Body, Header, Thumbnail } from "native-base";
+import { Card, CardItem, Body } from "native-base";
 class ProductData extends Component {
     render() {
         return (

@@ -7,16 +7,8 @@
  */
 
 import React, { Component } from "react";
-import {
-    Container,
-    Content,
-    Card,
-    CardItem,
-    Body,
-    Left,
-    Thumbnail
-} from "native-base";
-import { FlatList, Text, TouchableOpacity } from "react-native";
+import { Container, Content } from "native-base";
+import { FlatList } from "react-native";
 
 import ProductData from "../components/ProductData";
 

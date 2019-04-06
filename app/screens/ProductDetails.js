@@ -16,17 +16,15 @@ import {
     Footer,
     Body,
     Left,
-    Right,
     Input
 } from "native-base";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import Cart from "./Cart";
 class ProductDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            myNumber: 1
+            qty: 1
         };
     }
     static navigationOptions = ({ navigation }) => {
@@ -44,42 +42,42 @@ class ProductDetails extends Component {
         };
     };
     onTextChanged = text => {
-        if (this.state.myNumber < 1) {
+        if (this.state.qty < 1) {
             this.setState({
-                myNumber: parseInt(text)
+                qty: parseInt(text)
             });
         } else {
             this.setState({
-                myNumber: text.replace(/[^0-9]/g, "")
+                qty: text.replace(/[^0-9]/g, "")
             });
         }
     };
     onTextEnd() {
-        if (this.state.myNumber < 1) {
+        if (this.state.qty < 1) {
             this.setState({
-                myNumber: 1
+                qty: 1
             });
         }
     }
     addNum = () => {
-        if (this.state.myNumber < 1) {
+        if (this.state.qty < 1) {
             this.setState({
-                myNumber: 1
+                qty: 1
             });
         } else {
             this.setState({
-                myNumber: this.state.myNumber + 1
+                qty: this.state.qty + 1
             });
         }
     };
     subNum = () => {
-        if (this.state.myNumber < 2) {
+        if (this.state.qty < 2) {
             this.setState({
-                myNumber: 1
+                qty: 1
             });
         } else {
             this.setState({
-                myNumber: this.state.myNumber - 1
+                qty: this.state.qty - 1
             });
         }
     };
@@ -91,7 +89,7 @@ class ProductDetails extends Component {
         const price = navigation.getParam("itemPrice", "");
         const seller = navigation.getParam("itemSeller", "");
         const details = navigation.getParam("itemDetails", "");
-        const qty = this.state.myNumber;
+        const qty = this.state.qty;
         console.log(qty);
         return (
             <Container>
@@ -153,7 +151,7 @@ class ProductDetails extends Component {
                                         this.onTextChanged(text)
                                     }
                                     onEndEditing={() => this.onTextEnd()}
-                                    value={this.state.myNumber.toString()}
+                                    value={this.state.qty.toString()}
                                 />
                                 <Button
                                     style={styles.buttonWhite}
@@ -188,7 +186,7 @@ class ProductDetails extends Component {
                                 itemPrice: price,
                                 itemSeller: seller,
                                 itemDetails: details,
-                                itemQty: this.state.myNumber
+                                itemQty: this.state.qty
                             });
                         }}
                     >
@@ -197,8 +195,8 @@ class ProductDetails extends Component {
                     <Button
                         style={styles.footerButtonMain}
                         onPress={() => {
-                            this.props.navigation.navigate("Checkout",{
-                                itemPrice: price*this.state.myNumber
+                            this.props.navigation.navigate("Checkout", {
+                                itemPrice: price * this.state.qty
                             });
                         }}
                     >
