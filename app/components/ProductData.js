@@ -1,8 +1,10 @@
-
 import React, { Component } from "react";
 import { Text, TouchableOpacity, View, Image } from "react-native";
 import { Card, CardItem, Body } from "native-base";
+import axios from "axios";
+
 class ProductData extends Component {
+    componentDidMount() {}
     render() {
         return (
             <View style={{ flex: 1, flexDirectopn: "column" }}>
@@ -10,7 +12,11 @@ class ProductData extends Component {
                     <TouchableOpacity onPress={this.props.getDetails}>
                         <CardItem cardBody>
                             <Image
-                                source={this.props.itemImage}
+                                source={{
+                                    uri:
+                                        "http://192.168.43.139:3333/" +
+                                        this.props.itemImage
+                                }}
                                 style={{ height: 150, width: null, flex: 1 }}
                             />
                         </CardItem>

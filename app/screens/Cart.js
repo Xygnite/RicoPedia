@@ -1,65 +1,86 @@
-
 import React, { Component } from "react";
 import { Container, Body, Footer, Button } from "native-base";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { FlatList, Text, StyleSheet, View } from "react-native";
+import {
+    FlatList,
+    Text,
+    StyleSheet,
+    View,
+    KeyboardAvoidingView
+} from "react-native";
 import { withNavigation } from "react-navigation";
+import axios from "axios";
 
 import CartData from "../components/CartData";
 
-class ProductList extends Component {
+class Cart extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            itemDetail: [],
+            orders: [],
             deletedKey: "",
             total: 0
         };
     }
-    componentWillUnmount() {}
     componentDidMount() {
-        this.addData();
+        axios.get("http://192.168.43.139:3333/v1/orders").then(res => {
+            const orders = res.data.data;
+            this.setState({ orders: orders });
+            console.log(orders);
+        });
     }
     componentDidUpdate() {
-        const { navigation } = this.props;
-        if (this.state.itemDetail.length > 0) {
-            const total = this.state.itemDetail
-                .map(x => x.price * x.qty)
-                .reduce((a, b) => a + b)
-                .toString();
-            if (this.state.total !== total) {
-                this.setState({
-                    total: total
-                });
-            }
-        }
+        // console.log("updated!");
+        // axios.get("http://192.168.43.139:3333/v1/orders").then(res => {
+        //     const orders = res.data.data;
+        //     this.setState({ orders: orders });
+        //     console.log(orders);
+        // });
     }
+    // componentWillUnmount() {}
+    // componentDidMount() {
+    //     this.addData();
+    // }
+    // componentDidUpdate() {
+    //     const { navigation } = this.props;
+    //     if (this.state.orders.length > 0) {
+    //         const total = this.state.orders
+    //             .map(x => x.price * x.qty)
+    //             .reduce((a, b) => a + b)
+    //             .toString();
+    //         if (this.state.total !== total) {
+    //             this.setState({
+    //                 total: total
+    //             });
+    //         }
+    //     }
+    // }
     // componentDidUpdate(prevProps, prevState) {
     //     console.log("didupdate");
     //     const { navigation } = this.props;
     //     const key = navigation.getParam("itemKey", "");
     //     const qty = navigation.getParam("itemQty", "");
     //     const update = navigation.getParam("update", false);
-    //     const modID = this.state.itemDetail.filter(x => {
+    //     const modID = this.state.orders.filter(x => {
     //         return x.key == key;
     //     });
-    //     const prevmodID = prevState.itemDetail.filter(x => {
+    //     const prevmodID = prevState.orders.filter(x => {
     //         return x.key == key;
     //     });
-    //     const index = this.state.itemDetail.indexOf(x => x.key == key) + 1;
+    //     const index = this.state.orders.indexOf(x => x.key == key) + 1;
 
     //     if (modID.length < 1) {
     //         this.addData();
     // } else {
     //     console.log(index);
     //     this.setState({
-    //         itemDetail: [
-    //             ...this.state.itemDetail.slice(0, index),
-    //             Object.assign({}, this.state.itemDetail[index], {
-    //                 qty: this.state.itemDetail[index].qty + qty
+    //         orders: [
+    //             ...this.state.orders.slice(0, index),
+    //             Object.assign({}, this.state.orders[index], {
+    //                 qty: this.state.orders[index].qty + qty
     //             }),
-    //             ...this.state.itemDetail.slice(index + 1)
+    //             ...this.state.orders.slice(index + 1)
     //         ]
     //     });
     //     }
@@ -67,73 +88,73 @@ class ProductList extends Component {
     // }
     addNum = (item, index) => () => {
         this.setState({
-            itemDetail: [
-                ...this.state.itemDetail.slice(0, index),
-                Object.assign({}, this.state.itemDetail[index], {
+            orders: [
+                ...this.state.orders.slice(0, index),
+                Object.assign({}, this.state.orders[index], {
                     qty: item.qty + 1
                 }),
-                ...this.state.itemDetail.slice(index + 1)
+                ...this.state.orders.slice(index + 1)
             ]
         });
     };
     subNum = (item, index) => () => {
-        if (this.state.itemDetail[index].qty < 2) {
+        if (this.state.orders[index].qty < 2) {
             this.setState({
-                itemDetail: [
-                    ...this.state.itemDetail.slice(0, index),
-                    Object.assign({}, this.state.itemDetail[index], {
+                orders: [
+                    ...this.state.orders.slice(0, index),
+                    Object.assign({}, this.state.orders[index], {
                         qty: 1
                     }),
-                    ...this.state.itemDetail.slice(index + 1)
+                    ...this.state.orders.slice(index + 1)
                 ]
             });
         } else {
             this.setState({
-                itemDetail: [
-                    ...this.state.itemDetail.slice(0, index),
-                    Object.assign({}, this.state.itemDetail[index], {
+                orders: [
+                    ...this.state.orders.slice(0, index),
+                    Object.assign({}, this.state.orders[index], {
                         qty: item.qty - 1
                     }),
-                    ...this.state.itemDetail.slice(index + 1)
+                    ...this.state.orders.slice(index + 1)
                 ]
             });
         }
     };
     textNum = (item, index) => text => {
-        if (this.state.itemDetail[index].qty == 0) {
+        if (this.state.orders[index].qty == 0) {
             console.log("if");
             this.setState({
-                itemDetail: [
-                    ...this.state.itemDetail.slice(0, index),
-                    Object.assign({}, this.state.itemDetail[index], {
+                orders: [
+                    ...this.state.orders.slice(0, index),
+                    Object.assign({}, this.state.orders[index], {
                         qty: parseInt(text)
                     }),
-                    ...this.state.itemDetail.slice(index + 1)
+                    ...this.state.orders.slice(index + 1)
                 ]
             });
         } else {
             console.log("else");
             this.setState({
-                itemDetail: [
-                    ...this.state.itemDetail.slice(0, index),
-                    Object.assign({}, this.state.itemDetail[index], {
+                orders: [
+                    ...this.state.orders.slice(0, index),
+                    Object.assign({}, this.state.orders[index], {
                         qty: text.replace(/[^0-9]/g, "")
                     }),
-                    ...this.state.itemDetail.slice(index + 1)
+                    ...this.state.orders.slice(index + 1)
                 ]
             });
         }
     };
     editNum = (item, index) => () => {
-        if (this.state.itemDetail[index].qty == 0 || null) {
+        if (this.state.orders[index].qty == 0 || null) {
             console.log("if");
             this.setState({
-                itemDetail: [
-                    ...this.state.itemDetail.slice(0, index),
-                    Object.assign({}, this.state.itemDetail[index], {
+                orders: [
+                    ...this.state.orders.slice(0, index),
+                    Object.assign({}, this.state.orders[index], {
                         qty: 1
                     }),
-                    ...this.state.itemDetail.slice(index + 1)
+                    ...this.state.orders.slice(index + 1)
                 ]
             });
         }
@@ -147,36 +168,34 @@ class ProductList extends Component {
             const name = navigation.getParam("itemName", "");
             const price = navigation.getParam("itemPrice", "");
             const seller = navigation.getParam("itemSeller", "");
-            const details = navigation.getParam("itemDetails", "");
+            const details = navigation.getParam("orderss", "");
             const key = navigation.getParam("itemKey", "");
             const qty = navigation.getParam("itemQty", "");
-            const modID = this.state.itemDetail.filter(x => {
+            const modID = this.state.orders.filter(x => {
                 return x.key == key;
             });
             if (key == "delete") {
                 this.setState({
-                    itemDetail: []
+                    orders: []
                 });
             } else if (modID.length == 1) {
                 console.log(key);
-                const index = this.state.itemDetail
-                    .map(x => x.key)
-                    .indexOf(key);
+                const index = this.state.orders.map(x => x.key).indexOf(key);
 
                 console.log("index", index);
                 this.setState({
-                    itemDetail: [
-                        ...this.state.itemDetail.slice(0, index),
-                        Object.assign({}, this.state.itemDetail[index], {
-                            qty: this.state.itemDetail[index].qty + qty
+                    orders: [
+                        ...this.state.orders.slice(0, index),
+                        Object.assign({}, this.state.orders[index], {
+                            qty: this.state.orders[index].qty + qty
                         }),
-                        ...this.state.itemDetail.slice(index + 1)
+                        ...this.state.orders.slice(index + 1)
                     ]
                 });
             } else if (modID.length < 1 && key !== "") {
                 this.setState({
-                    itemDetail: [
-                        ...this.state.itemDetail,
+                    orders: [
+                        ...this.state.orders,
                         {
                             key: key,
                             img: img,
@@ -192,25 +211,36 @@ class ProductList extends Component {
         });
     }
     delData = (item, index) => () => {
-        if (this.state.itemDetail.length == 1) {
-            this.setState({
-                itemDetail: [],
-                deletedKey: item.key
+        // if (this.state.orders.length == 1) {
+        //     this.setState({
+        //         orders: [],
+        //         deletedKey: item.key
+        //     });
+        // } else {
+        // const modState = this.state.orders.filter(x => {
+        //     return x.key !== item.key;
+        // });
+        // this.setState({
+        //     orders: [...modState],
+        //     deletedKey: item.key
+        // });
+        // }
+        console.log()
+        axios
+            .delete("http://192.168.43.139:3333/v1/order/" + item.id)
+            .then(() => {
+                const modState = this.state.orders.filter(x => {
+                    return x.id !== item.id;
+                });
+                this.setState({
+                    orders: [...modState]
+                });
             });
-        } else {
-            const modState = this.state.itemDetail.filter(x => {
-                return x.key !== item.key;
-            });
-            this.setState({
-                itemDetail: [...modState],
-                deletedKey: item.key
-            });
-        }
     };
     render() {
         const { navigation } = this.props;
 
-        if (this.state.itemDetail.length < 1) {
+        if (this.state.orders.length < 1) {
             return (
                 <Container
                     style={{ justifyContent: "center", alignItems: "center" }}
@@ -223,26 +253,27 @@ class ProductList extends Component {
                 </Container>
             );
         } else {
-            const total = this.state.itemDetail
+            console.log(this.state.orders[0].qty);
+            const total = this.state.orders
                 .map(x => x.price * x.qty)
                 .reduce((a, b) => a + b)
                 .toString();
             return (
                 <Container>
                     <FlatList
-                        data={this.state.itemDetail}
+                        viewabilityConfig={{
+                            viewAreaCoveragePercentThreshold: 0
+                        }}
+                        data={this.state.orders}
                         renderItem={({ item, index }) => (
                             <CartData
                                 ref={child => {
                                     this.child = child;
                                 }}
                                 {...this.props}
-                                itemKey={item.key}
-                                itemImage={item.img}
-                                itemName={item.name}
-                                itemSeller={item.seller}
+                                cartId={item.id}
+                                itemId={item.product_id}
                                 itemPrice={item.price}
-                                itemDetails={item.details}
                                 itemQty={item.qty.toString()}
                                 addQty={this.addNum(item, index)}
                                 subQty={this.subNum(item, index)}
@@ -251,7 +282,9 @@ class ProductList extends Component {
                                 delData={this.delData(item, index)}
                             />
                         )}
+                        keyExtractor={item => item.id.toString()}
                     />
+
                     <Footer style={styles.footerStyle}>
                         <View
                             style={{
@@ -318,4 +351,4 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     }
 });
-export default withNavigation(ProductList);
+export default Cart;
